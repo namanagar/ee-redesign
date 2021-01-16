@@ -1,6 +1,6 @@
 @font-face {
   font-family: PT Root;
-  src: url('../fonts/ptroot.woff2');
+  src: url('../assets/ptroot.woff2');
 }
 
 body {
@@ -24,6 +24,7 @@ header {
 
 header h1, header h2 {
   display: flex;
+  font-size: 16px;
 }
 
 h1 span, h2 span {

@@ -1,20 +1,25 @@
-import React from "react"
+import React, { useRef, useEffect } from "react"
+import { gsap } from "gsap"
 import { Link } from "gatsby"
 import { graphql } from "gatsby"
 import Img from "gatsby-image"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
+import arrow from '../assets/arrow.svg'
 
 const IndexPage = ({ data }) => {
+
+  const slides = data.allImageSharp.edges.map((edge) => 
+      <Img key={edge.node.id} fixed={edge.node.fixed}/>
+    )
+
   return (
     <Layout>
       <SEO title="Home" />
       <section>
         <div className="split">
           <div className="slides">
-            { data.allImageSharp.edges.map((edge) => 
-              <Img key={edge.node.id} fixed={edge.node.fixed}/>
-            )}
+            { slides }
           </div>
         </div>
         <div className="split">
@@ -28,7 +33,7 @@ const IndexPage = ({ data }) => {
           <p>
             <a href="#">
               Read more
-              <img src="arrow.svg" />
+              <img src={arrow} />
             </a>
           </p>
         </div>
