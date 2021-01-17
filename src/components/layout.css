@@ -24,7 +24,7 @@ header {
 
 header h1, header h2 {
   display: flex;
-  font-size: 16px;
+  font-size: 13px;
 }
 
 h1 span, h2 span {
@@ -62,8 +62,7 @@ section div.slides {
   perspective: 800px;
 }
 
-section div.slides img {
-  position: absolute;
+section div.slides .image {
   top: 0;
   left: 0;
   width: 500px;
@@ -130,7 +129,7 @@ section.alternative div.split:last-child {
 
 @media (max-width: 700px) {
   section div.slides, 
-  section div.slides img {
+  section div.slides .image {
     width: 80vw;
     height: 120vw;
   }

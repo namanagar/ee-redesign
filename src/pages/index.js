@@ -6,20 +6,80 @@ import Img from "gatsby-image"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import arrow from '../assets/arrow.svg'
+import { CSSPLugin } from "gsap/CSSPlugin"
 
 const IndexPage = ({ data }) => {
+  const plugin = [ CSSPLugin ] // to avoid webpack tree shaking
+  const timeline = useRef(gsap.timeline())
+  const flipTimeline = useRef(gsap.timeline())
+  const z = useRef(1000000000)
+  const curr = useRef(0)
 
-  const slides = data.allImageSharp.edges.map((edge) => 
-      <Img key={edge.node.id} fixed={edge.node.fixed}/>
+  const slides = () => data.allImageSharp.edges.map((edge, i) => {
+      return (
+        <div id={i} key={i} style={{zIndex: z.current - i, position: "absolute", className:"image"}} >
+          <Img fixed={edge.node.fixed}/>
+        </div>
     )
+  })
+
+  const nextImage = () => {
+    z.current = z.current - 1
+    let direction = "150%"
+    let midAngle = 15
+
+    if (Math.random() > 0.5) {
+      direction = "-150%"
+      midAngle = -15
+    }
+    flipTimeline.current
+    .set(`#${CSS.escape(curr.current)}`, { x: 0 })
+    .to(`#${CSS.escape(curr.current)}`, { 
+      x: direction,
+      rotation: midAngle,
+      rotationY: 90,
+      scale: 1.1
+    })
+    .set(`#${CSS.escape(curr.current)}`, { zIndex: z.current })
+    .to(`#${CSS.escape(curr.current)}`, { 
+      x: 0,
+      rotation: () => {
+        return 16 * Math.random() - 8
+      },
+      rotationY: 0,
+      scale: 1
+    })
+    
+    curr.current = ((curr.current + 1) % data.allImageSharp.edges.length)
+  }
+
+  useEffect(() => {
+    timeline.current
+    .set("section div.slides img", {
+      x: () => {
+        return 500 * Math.random() - 250
+      },
+      y: "500%",
+      rotation: () => {
+        return 90 * Math.random() - 45
+      },
+      opacity: 1
+    })
+    .to("section div.slides img", { x: 0, y: 0, stagger: -0.25 })
+    .to("section div.slides img", { 
+      rotation: () => {
+        return 16 * Math.random() - 8
+      } 
+    })
+  }, [])
 
   return (
     <Layout>
       <SEO title="Home" />
       <section>
         <div className="split">
-          <div className="slides">
-            { slides }
+          <div className="slides" onClick={nextImage}>
+            { slides() }
           </div>
         </div>
         <div className="split">
@@ -31,8 +91,8 @@ const IndexPage = ({ data }) => {
           You are just one click away from making memories.
           </p>
           <p>
-            <a href="#">
-              Read more
+            <a href="mailto:info@campusenterprises.org">
+              Contact us
               <img src={arrow} />
             </a>
           </p>
