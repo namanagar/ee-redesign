@@ -17,7 +17,7 @@ const IndexPage = ({ data }) => {
 
   const slides = () => data.allImageSharp.edges.map((edge, i) => {
       return (
-        <div id={i} key={i} style={{zIndex: z.current - i, position: "absolute", className:"image"}} >
+        <div id={i} key={i} style={{zIndex: z.current, position: "absolute", className:"image"}} >
           <Img fixed={edge.node.fixed}/>
         </div>
     )
@@ -54,19 +54,23 @@ const IndexPage = ({ data }) => {
   }
 
   useEffect(() => {
+    nextImage()
+    nextImage()
+    nextImage()
+    nextImage()
     timeline.current
-    .set("section div.slides img", {
+    .set("section div.slides .image", {
       x: () => {
         return 500 * Math.random() - 250
       },
       y: "500%",
       rotation: () => {
-        return 90 * Math.random() - 45
+        return 120 * Math.random() - 60
       },
       opacity: 1
     })
-    .to("section div.slides img", { x: 0, y: 0, stagger: -0.25 })
-    .to("section div.slides img", { 
+    .to("section div.slides .image", { x: 0, y: 0, stagger: -0.25 })
+    .to("section div.slides .image", { 
       rotation: () => {
         return 16 * Math.random() - 8
       } 
@@ -109,7 +113,7 @@ export const query = graphql`{
     edges {
       node {
         id
-        fixed(width: 400) {
+        fixed(width: 500) {
           ...GatsbyImageSharpFixed_withWebp_noBase64
         }
       }

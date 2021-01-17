@@ -1,4 +1,5 @@
 module.exports = {
+  pathPrefix: "/ee-redesign",
   siteMetadata: {
     title: `Enterprise Entertainment`,
     description: `Don't lift a finger, raise a glass. Event planning and more brought to you by Campus Enterprises in Durham, NC.`,
