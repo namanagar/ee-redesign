@@ -17,7 +17,7 @@ const IndexPage = ({ data }) => {
 
   const slides = () => data.allImageSharp.edges.map((edge, i) => {
       return (
-        <div id={i} key={i} style={{zIndex: z.current - i, position: "absolute", width: "100%", height: "100%"}} >
+        <div id={i} key={i} style={{zIndex: z.current - i, className:"image", position: "absolute", width: "100%", height: "100%"}} >
           <Img fluid={edge.node.fluid}/>
         </div>
     )
@@ -54,6 +54,8 @@ const IndexPage = ({ data }) => {
   }
 
   useEffect(() => {
+    gsap.set("section div.slides img", { opacity: 0 })
+
     data.allImageSharp.edges.forEach(() => {
       nextImage()
     })
@@ -64,7 +66,7 @@ const IndexPage = ({ data }) => {
       },
       y: "500%",
       rotation: () => {
-        return 120 * Math.random() - 60
+        return 90 * Math.random() - 45
       },
       opacity: 1
     })
