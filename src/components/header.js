@@ -1,4 +1,4 @@
-import { Link } from "gatsby"
+//import { Link } from "gatsby"
 import React, { useRef, useEffect } from "react"
 import { gsap } from "gsap"
 import PropTypes from "prop-types"
@@ -10,10 +10,11 @@ const Header = ({ siteTitle }) => {
   const titleTimeline = useRef(gsap.timeline({ repeat: -1}))
   const subtitleTimeline = useRef(gsap.timeline({ repeat: -1}))
 
+
   useEffect(() => {
     fadeInTimeline.current
-      .set([titleRef.current, subtitleRef.current], { opacity: 0 })
-      .to([titleRef.current, subtitleRef.current], { opacity: 1, delay: 1, stagger: 1, duration: 3 })
+      .set(  [subtitleRef.current, titleRef.current], { opacity: 0 })
+      .to(  [subtitleRef.current, titleRef.current], { opacity: 1, delay: 1, stagger: 1, duration: 3 })
     titleTimeline.current
       .set(titleRef.current, {x : 0})
       .to(titleRef.current, {x : titleRef.current.offsetWidth*-1, ease: "linear", duration: 60})
@@ -24,12 +25,12 @@ const Header = ({ siteTitle }) => {
 
   return (
     <header>
-      <h1 ref={titleRef}>
-        { [...Array(25)].map((e, i) => <span key={i}>Campus Enterprises</span>) }
-      </h1>
       <h2 ref={subtitleRef}>
         { [...Array(20)].map((e, i) => <span key={i}>Enterprise Entertainment</span>) }
       </h2>
+      <h1 ref={titleRef}>
+        { [...Array(25)].map((e, i) => <span key={i}><a href="https://campusenterprises.com/">Campus Enterprises</a></span>) }
+      </h1>
     </header>
   )
 }

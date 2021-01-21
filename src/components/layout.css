@@ -49,6 +49,16 @@ table {
 }
 
 /* my css */
+
+a {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+a:hover {
+  font-size: 14px;
+}
+
 @font-face {
   font-family: PT Root;
   src: url('../assets/ptroot.woff2');
@@ -90,7 +100,7 @@ h2 span {
 
 section {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1.5fr 1fr;
   min-height: 100vh;
   grid-auto-flow: dense;
 }
@@ -102,13 +112,13 @@ section div.split {
   overflow: hidden;
 }
 
-section div.split:first-child {
+/*section div.split:first-child {
   background-color: #111111;
-}
+} */
 
 section div.slides {
-  width: 500px;
-  height: 750px;
+  width: 800px;
+  height: 500px;
   position: relative;
   perspective: 800px;
 }
@@ -116,8 +126,8 @@ section div.slides {
 section div.slides .image {
   top: 0;
   left: 0;
-  width: 500px;
-  height: 750px;
+  width: 800px;
+  height: 500px;
   box-shadow:  0 0 30px rgba(0, 0, 0, 0.25);
 }
 
@@ -181,7 +191,7 @@ section.alternative div.split:last-child {
 @media (max-width: 700px) {
   section div.slides, 
   section div.slides .image {
-    width: 80vw;
-    height: 120vw;
+    width: 100vw;
+    height: 65vw;
   }
 }

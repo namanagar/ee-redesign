@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from "react"
 import { gsap } from "gsap"
-import { Link } from "gatsby"
+//import { Link } from "gatsby"
 import { graphql } from "gatsby"
 import Img from "gatsby-image"
 import Layout from "../components/layout"
@@ -17,7 +17,7 @@ const IndexPage = ({ data }) => {
 
   const slides = () => data.allImageSharp.edges.map((edge, i) => {
       return (
-        <div id={i} key={i} style={{zIndex: z.current - i, className:"image", position: "absolute", width: "100%", height: "100%"}} >
+        <div id={i} key={i} className="image" style={{zIndex: z.current - i, position: "absolute", width: "100%", height: "100%"}} >
           <Img fluid={edge.node.fluid}/>
         </div>
     )
@@ -54,13 +54,24 @@ const IndexPage = ({ data }) => {
   }
 
   useEffect(() => {
-    gsap.set("section div.slides img", { opacity: 0 })
-
     data.allImageSharp.edges.forEach(() => {
-      nextImage()
+      z.current = z.current - 1
+      flipTimeline.current
+      .set(`#${CSS.escape(curr.current)}`, { x: 0 })
+      .to(`#${CSS.escape(curr.current)}`, { 
+        x: "150%",
+        duration: 0
+      })
+      .set(`#${CSS.escape(curr.current)}`, { zIndex: z.current })
+      .to(`#${CSS.escape(curr.current)}`, { 
+        x: 0,
+        duration: 0,
+      })
+      curr.current = ((curr.current + 1) % data.allImageSharp.edges.length)
     })
+
     timeline.current
-    .set("section div.slides img", {
+    .set("section div.slides .image", {
       x: () => {
         return 500 * Math.random() - 250
       },
@@ -70,8 +81,8 @@ const IndexPage = ({ data }) => {
       },
       opacity: 1
     })
-    .to("section div.slides img", { x: 0, y: 0, stagger: -0.25 })
-    .to("section div.slides img", { 
+    .to("section div.slides .image", { x: 0, y: 0, stagger: -0.25 })
+    .to("section div.slides .image", { 
       rotation: () => {
         return 16 * Math.random() - 8
       } 
@@ -114,7 +125,7 @@ export const query = graphql`{
     edges {
       node {
         id
-        fluid(maxWidth: 500) {
+        fluid(maxWidth: 1000) {
           ...GatsbyImageSharpFluid_withWebp_noBase64
         }
       }
